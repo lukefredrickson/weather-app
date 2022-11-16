@@ -1,4 +1,4 @@
-export type CurrentWeather = {
+export interface CurrentWeather {
   coord: {
     lon: number;
     lat: number;
@@ -52,3 +52,24 @@ export type CurrentWeather = {
   name: string;
   cod: number;
 };
+
+export interface GeocodedLocation {
+  name: string;
+  local_names: any
+  lat: number;
+  lon: number;
+  country: string;
+  state?: string;
+}
+
+export type ReverseGeocodedLocation = GeocodedLocation[]
+
+export type GeocodedLocationByName = GeocodedLocation[]
+
+export interface GeocodedLocationByZip {
+  zip: string;
+  name: string;
+  lat: number;
+  lon: number;
+  country: string;
+}
