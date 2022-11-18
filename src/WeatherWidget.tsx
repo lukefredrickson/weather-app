@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   useCurrentWeather,
+  useFiveDayForecast,
   useGeocodingByZip,
   useGeocodingByName,
   useReverseGeocodedLocation,
@@ -13,10 +14,11 @@ interface Props {
 }
 
 export default function WeatherWidget({ lat, lon }: Props) {
+  let forecast = useFiveDayForecast(lat, lon);
   let currentWeather = useCurrentWeather(lat, lon);
   let locationByName = useGeocodingByName("Seattle", "", "");
-  console.log(locationByName);
   let location = useReverseGeocodedLocation(lat, lon);
+  console.log(forecast);
 
   if (currentWeather !== undefined && location !== undefined) {
     return (

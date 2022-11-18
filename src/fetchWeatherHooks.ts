@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import { 
-  CurrentWeather, 
+  CurrentWeather,
+  FiveDayForecast,
   GeocodedLocation, 
-  GeocodedLocationByName as GeocodedLocationsByName, 
+  GeocodedLocationsByName, 
   GeocodedLocationByZip, 
-  ReverseGeocodedLocation as ReverseGeocodedLocations 
+  ReverseGeocodedLocations 
 } from "./apiResponseTypes"
 import { API_KEY } from "./config";
 
@@ -19,6 +20,25 @@ export function useCurrentWeather(lat: number, lon: number): CurrentWeather | un
         { mode: "cors" }
       );
       let data: CurrentWeather = await response.json();
+      setData(data);
+    }
+    fetchData();
+  }, [lat, lon]);
+
+  return data;
+}
+
+
+export function useFiveDayForecast(lat: number, lon: number): FiveDayForecast | undefined {
+  let [data, setData] = useState<FiveDayForecast | undefined>(undefined);
+
+  useEffect(() => {
+    async function fetchData() {
+      let response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+        { mode: "cors" }
+      );
+      let data: FiveDayForecast = await response.json();
       setData(data);
     }
     fetchData();
